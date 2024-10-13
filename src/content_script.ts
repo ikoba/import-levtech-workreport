@@ -1,3 +1,5 @@
+import Papa from "papaparse";
+
 const button = document.createElement("button");
 button.type = "button";
 button.textContent = "CSVインポート";
@@ -11,6 +13,7 @@ input.accept = ".csv,text/plain";
 input.onchange = () => {
   if (input.files) {
     const file = input.files[0];
+    Papa.parse(file);
     console.log(file.name);
   }
 };
