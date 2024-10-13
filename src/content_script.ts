@@ -1,5 +1,22 @@
 import Papa from "papaparse";
 
+waitQuerySelector(".tabContainer")?.then((elem) => {
+  elem.prepend(button);
+});
+
+async function waitQuerySelector(selector: string): Promise<Element> {
+  let elem: Element | null = null;
+
+  while (!elem) {
+    elem = await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(document.querySelector(selector));
+      }, 100);
+    });
+  }
+  return elem;
+};
+
 const button = document.createElement("button");
 button.type = "button";
 button.textContent = "CSVインポート";
@@ -24,21 +41,4 @@ input.onchange = () => {
       }
     }
   });
-};
-
-waitQuerySelector(".tabContainer")?.then((elem) => {
-  elem.prepend(button);
-});
-
-async function waitQuerySelector(selector: string): Promise<Element> {
-  let elem: Element | null = null;
-
-  while (!elem) {
-    elem = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(document.querySelector(selector));
-      }, 100);
-    });
-  }
-  return elem;
 };
