@@ -11,11 +11,19 @@ const input = document.createElement("input");
 input.type = "file";
 input.accept = ".csv,text/plain";
 input.onchange = () => {
-  if (input.files) {
-    const file = input.files[0];
-    Papa.parse(file);
-    console.log(file.name);
+  if (input.files == null) {
+    return
   }
+  const file = input.files[0];
+  Papa.parse(file, {
+    header: true,
+    complete: (results) => {
+      let obj;
+      if (obj = results.data[0] as Object) {
+        console.log(Object.values(obj));
+      }
+    }
+  });
 };
 
 waitQuerySelector(".tabContainer")?.then((elem) => {
