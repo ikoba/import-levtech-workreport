@@ -9,10 +9,10 @@ export default defineConfig((opt) => {
       emptyOutDir: true,
       rollupOptions: {
         input: {
-          index: resolve(__dirname, "src/index.ts"),
+          index: resolve(__dirname, "src/content_script.ts"),
         },
         output: {
-          entryFileNames: '[name].js',
+          entryFileNames: "content_script.js",
         },
       },
     },
