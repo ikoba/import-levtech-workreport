@@ -5,7 +5,8 @@
   "type": "module",
   "main": "content_script.js",
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "pnpm fix && tsc && vite build",
+    "fix": "biome check --write src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
