@@ -29,6 +29,10 @@ async function waitQuerySelector(selector: string): Promise<Element> {
 const button = document.createElement("button");
 button.type = "button";
 button.textContent = "CSVインポート";
+button.setAttribute(
+  "style",
+  "margin-bottom: 10px; padding: 5px; background-color: yellow",
+);
 button.onclick = () => {
   input.click();
 };
