@@ -1,5 +1,16 @@
 import Papa from "papaparse";
 
+type Report = {
+  startTime: string;
+  endTime: string;
+  relaxTime: string;
+  workContent: string;
+};
+
+type MonthlyReport = { [key: string]: Report };
+
+const monthlyReport: MonthlyReport = {};
+
 waitQuerySelector(".tabContainer")?.then((elem) => {
   elem.prepend(button);
 });
@@ -35,10 +46,21 @@ input.onchange = () => {
   Papa.parse(file, {
     header: true,
     complete: (results) => {
-      let obj;
-      if (obj = results.data[0] as Object) {
-        console.log(Object.values(obj));
+      for (const row of results.data) {
+        const fields = Object.values(row as Object);
+        const dateString = fields[0].replaceAll("/", "");
+        monthlyReport[dateString] = {
+          startTime: fields[1],
+          endTime: fields[2],
+          relaxTime: fields[3],
+          workContent: fields[4]
+        };
       }
+      inputReport();
     }
   });
 };
+
+function inputReport() {
+  console.log(monthlyReport);
+}
