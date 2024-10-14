@@ -24,7 +24,7 @@ async function waitQuerySelector(selector: string): Promise<Element> {
     });
   }
   return elem;
-};
+}
 
 const button = document.createElement("button");
 button.type = "button";
@@ -38,7 +38,7 @@ input.type = "file";
 input.accept = ".csv,text/plain";
 input.onchange = () => {
   if (input.files == null) {
-    return
+    return;
   }
   const file = input.files[0];
   Papa.parse(file, {
@@ -47,17 +47,17 @@ input.onchange = () => {
       const monthlyReport: MonthlyReport = {};
 
       for (const row of results.data) {
-        const fields = Object.values(row as Object);
+        const fields = Object.values(row as object);
         const dateString = fields[0].replaceAll("/", "");
         monthlyReport[dateString] = {
           start_time: fields[1],
           end_time: fields[2],
           relax_time: fields[3],
-          work_content: fields[4]
+          work_content: fields[4],
         };
       }
       inputReport(monthlyReport);
-    }
+    },
   });
 };
 
