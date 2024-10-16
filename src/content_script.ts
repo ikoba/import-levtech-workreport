@@ -66,11 +66,11 @@ input.onchange = () => {
 };
 
 function inputReport(monthlyReport: MonthlyReport) {
-  for (const day of Object.keys(monthlyReport)) {
-    const report = monthlyReport[day];
+  for (const date of Object.keys(monthlyReport)) {
+    const report = monthlyReport[date];
     for (const [prop, value] of Object.entries(report)) {
-      const selector = `input[name="data[DailyReport][${day}][${prop}]"]`;
-      const input = document.querySelector(selector) as HTMLInputElement;
+      const selector = `input[name="data[DailyReport][${date}][${prop}]"]`;
+      const input = document.querySelector<HTMLInputElement>(selector);
       if (input != null && value != null) {
         input.value = value;
       }
