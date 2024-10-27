@@ -1,13 +1,12 @@
 import Papa from "papaparse";
 
-type Report = {
-  start_time: string;
-  end_time: string;
-  relax_time: string;
-  work_content: string;
-};
-
-type MonthlyReport = { [key: string]: Report };
+type ReportColumn =
+  | "date"
+  | "start_time"
+  | "end_time"
+  | "relax_time"
+  | "work_content";
+type Report = Record<ReportColumn, string>;
 
 waitQuerySelector(".tabContainer")?.then((elem) => {
   elem.prepend(button);
@@ -48,28 +47,30 @@ input.onchange = () => {
   Papa.parse(file, {
     header: true,
     complete: (results) => {
-      const monthlyReport: MonthlyReport = {};
-
-      for (const row of results.data) {
+      const reports: Report[] = results.data.map((row) => {
         const fields = Object.values(row as object);
-        const dateString = fields[0].replaceAll("/", "");
-        monthlyReport[dateString] = {
+        const report: Report = {
+          date: fields[0],
           start_time: fields[1],
           end_time: fields[2],
           relax_time: fields[3],
           work_content: fields[4],
         };
-      }
-      inputReport(monthlyReport);
+        return report;
+      });
+      inputReports(reports);
     },
   });
 };
 
-function inputReport(monthlyReport: MonthlyReport) {
-  for (const date of Object.keys(monthlyReport)) {
-    const report = monthlyReport[date];
-    for (const [prop, value] of Object.entries(report)) {
-      const selector = `input[name="data[DailyReport][${date}][${prop}]"]`;
+function inputReports(reports: Report[]) {
+  for (const report of reports) {
+    const date = report.date.replaceAll("/", "");
+
+    for (const [column, value] of Object.entries(report)) {
+      if (column === "date") continue;
+
+      const selector = `input[name="data[DailyReport][${date}][${column}]"]`;
       const input = document.querySelector<HTMLInputElement>(selector);
       if (input != null && value != null) {
         input.value = value;
