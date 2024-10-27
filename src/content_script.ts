@@ -47,7 +47,7 @@ input.onchange = () => {
   Papa.parse(file, {
     header: true,
     complete: (results) => {
-      const reports: Report[] = results.data.map((row) => {
+      const reports = results.data.map((row) => {
         const fields = Object.values(row as object)
         const report: Report = {
           date: fields[0],
@@ -68,8 +68,9 @@ function inputReports(reports: Report[]) {
     const date = report.date.replaceAll('/', '')
 
     for (const [column, value] of Object.entries(report)) {
-      if (column === 'date') continue
-
+      if (column === 'date') {
+        continue
+      }
       const selector = `input[name="data[DailyReport][${date}][${column}]"]`
       const input = document.querySelector<HTMLInputElement>(selector)
       if (input != null && value != null) {
