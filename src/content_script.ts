@@ -1,14 +1,14 @@
-import Papa from "papaparse";
+import Papa from 'papaparse';
 
 type ReportColumn =
-  | "date"
-  | "start_time"
-  | "end_time"
-  | "relax_time"
-  | "work_content";
+  | 'date'
+  | 'start_time'
+  | 'end_time'
+  | 'relax_time'
+  | 'work_content';
 type Report = Record<ReportColumn, string>;
 
-waitQuerySelector(".tabContainer")?.then((elem) => {
+waitQuerySelector('.tabContainer')?.then((elem) => {
   elem.prepend(button);
 });
 
@@ -25,20 +25,20 @@ async function waitQuerySelector(selector: string): Promise<Element> {
   return elem;
 }
 
-const button = document.createElement("button");
-button.type = "button";
-button.textContent = "CSVインポート";
+const button = document.createElement('button');
+button.type = 'button';
+button.textContent = 'CSVインポート';
 button.setAttribute(
-  "style",
-  "margin-bottom: 10px; padding: 5px; background-color: yellow",
+  'style',
+  'margin-bottom: 10px; padding: 5px; background-color: yellow',
 );
 button.onclick = () => {
   input.click();
 };
 
-const input = document.createElement("input");
-input.type = "file";
-input.accept = ".csv,text/plain";
+const input = document.createElement('input');
+input.type = 'file';
+input.accept = '.csv,text/plain';
 input.onchange = () => {
   if (input.files == null) {
     return;
@@ -65,10 +65,10 @@ input.onchange = () => {
 
 function inputReports(reports: Report[]) {
   for (const report of reports) {
-    const date = report.date.replaceAll("/", "");
+    const date = report.date.replaceAll('/', '');
 
     for (const [column, value] of Object.entries(report)) {
-      if (column === "date") continue;
+      if (column === 'date') continue;
 
       const selector = `input[name="data[DailyReport][${date}][${column}]"]`;
       const input = document.querySelector<HTMLInputElement>(selector);
