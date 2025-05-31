@@ -1,0 +1,45 @@
+name: Release Firefox Add-on
+
+on:
+  push:
+    tags:
+      - 'v*'  # バージョンタグ push 時のみ実行
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # リリースアップロードに必要
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build the add-on
+        id: build-artifact
+        run: |
+          pnpm build
+          node -e "var manifest=require('./manifest.json');manifest.content_scripts[0].js[0]='content_script.js';console.log(JSON.stringify(manifest))" > dist/manifest.json
+          cp -r icons/ dist
+          cd dist
+          zip -r -FS ../import-levtech-workreport.zip *
+          cd ..
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release and upload artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ steps.build-artifact.outputs.file }}
