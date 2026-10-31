@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "レバテック作業報告書インポート",
   "description": "CSVをインポートしてレバテックの作業報告を作成します。",
-  "version": "1.0",
+  "version": "1.1",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
@@ -11,7 +11,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://platform.levtech.jp/p/workreport/input/*"],
+      "matches": ["https://platform.levtech.jp/p/work-report/*"],
       "js": ["dist/content_script.js"]
     }
   ]
