@@ -37,7 +37,7 @@ jobs:
           cd dist
           zip -r -FS ../import-levtech-workreport.zip *
           cd ..
-          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+          echo "file=import-levtech-workreport.zip" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release and upload artifact
         uses: softprops/action-gh-release@v1
