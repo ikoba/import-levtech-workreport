@@ -11,7 +11,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://platform.levtech.jp/p/workreport/input/*"],
+      "matches": ["https://platform.levtech.jp/p/work-report/*"],
       "js": ["dist/content_script.js"]
     }
   ]
